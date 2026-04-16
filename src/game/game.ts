@@ -150,6 +150,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       };
     }
 
+    /* istanbul ignore next -- exhaustive switch; all GameAction variants are handled above */
     default:
       return state;
   }
