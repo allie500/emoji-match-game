@@ -22,8 +22,17 @@ This project is a classic matching game:
 
 ## Prerequisites
 
-- Node.js 20+ (or current LTS)
-- npm 10+
+- Node.js 24 (LTS)
+- npm 10+ (npm 11 ships with Node 24)
+
+### Using nvm
+
+If you use `nvm`, run:
+
+```bash
+nvm install
+nvm use
+```
 
 ## Install Dependencies
 
