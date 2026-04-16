@@ -118,3 +118,16 @@ emoji-match-game/
 ## Smartphone Testing via Tunnel (Optional)
 
 If you use ngrok for mobile testing, make sure your Vite `server.allowedHosts` includes your ngrok host in `vite.config.ts`. Then bring up the development server with `npm run dev`, and point ngrok to the local server's URL. Lastly, on your phone, go to the ngrok URL and you should see the app.
+
+```javascript
+export default defineConfig({
+  // ...your existing vite.config.ts,
+  server: {
+    allowedHosts: ["YOUR_NGROK_HOST.ngrok-free.app"],
+  },
+});
+```
+
+## Changelog
+
+See [changelog.md](changelog.md) for the latest changes.
