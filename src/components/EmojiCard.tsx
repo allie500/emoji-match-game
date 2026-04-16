@@ -17,6 +17,8 @@ export default function EmojiCard({
   disabled,
   onClick,
 }: EmojiCardProps) {
+  const cardStateClass = matched ? "is-matched" : faceUp ? "is-face-up" : "is-face-down";
+
   return (
     <button
       type="button"
@@ -24,24 +26,15 @@ export default function EmojiCard({
       disabled={disabled}
       aria-label={faceUp ? `Card: ${emoji}` : "Card hidden"}
       className={[
-        "relative w-full aspect-square rounded-xl border-2 transition-transform duration-200",
+        "emoji-card relative w-full aspect-square rounded-xl transition-transform duration-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
-        matched
-          ? "border-emerald-400/80 bg-emerald-400/10 text-3xl"
-          : faceUp
-            ? "border-white/20 bg-white/90 text-3xl dark:bg-white/5"
-            : "card-face-down border-slate-400/70 bg-slate-700/25 text-transparent shadow-inner shadow-slate-950/40",
+        cardStateClass,
         disabled ? "cursor-not-allowed opacity-80" : "hover:scale-[1.03] active:scale-[0.98]",
       ].join(" ")}
     >
-      <span
-        className={[
-          "absolute inset-0 flex items-center justify-center select-none",
-          faceUp ? "opacity-100" : "opacity-60",
-          "text-4xl sm:text-5xl",
-        ].join(" ")}
-      >
-        {faceUp ? emoji : "❓"}
+      <span className="card-flip-inner">
+        <span className="card-face card-back text-4xl sm:text-5xl">❓</span>
+        <span className="card-face card-front text-4xl sm:text-5xl">{emoji}</span>
       </span>
     </button>
   );
