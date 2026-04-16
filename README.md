@@ -18,6 +18,7 @@ This project is a classic matching game:
 - Vite
 - Tailwind CSS
 - ESLint + Prettier
+- Vitest + React Testing Library (unit tests)
 
 ## Prerequisites
 
@@ -59,6 +60,28 @@ Auto-fix formatting:
 ```bash
 npm run format
 ```
+
+## Tests
+
+Run the unit test suite once:
+
+```bash
+npm run test
+```
+
+Run tests in watch mode (re-runs on file changes):
+
+```bash
+npm run test:watch
+```
+
+Run tests with coverage (V8):
+
+```bash
+npm run test:coverage
+```
+
+Tests use **Vitest** with **jsdom** and **React Testing Library**. Configuration lives in `vite.config.ts` (`test` section); shared setup is in `src/test/setup.ts`.
 
 ## Production Build
 
@@ -107,6 +130,9 @@ emoji-match-game/
 │  │  └─ types.ts           # Shared game-related TypeScript types
 │  ├─ App.tsx               # App-level state wiring and effects
 │  ├─ main.tsx              # React app bootstrap
+│  ├─ test/
+│  │  └─ setup.ts           # Vitest + jest-dom setup
+│  ├─ vite-env.d.ts         # Vite / Vitest type references
 │  └─ index.css             # Global styles and Tailwind component styles
 ├─ index.html               # Vite HTML entry point
 ├─ tailwind.config.js       # Tailwind content/theme config
