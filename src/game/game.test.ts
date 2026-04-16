@@ -16,6 +16,11 @@ describe("buildDeck", () => {
     expect(deck).toHaveLength(4);
   });
 
+  it("works without an explicit rng by falling back to Math.random", () => {
+    const deck = buildDeck({ numPairs: 2, emojis });
+    expect(deck).toHaveLength(4);
+  });
+
   it("has exactly two cards per pairKey", () => {
     const deck = buildDeck({ numPairs: 2, emojis, rng: fixedRng });
     const byKey = new Map<string, number>();
@@ -95,6 +100,12 @@ describe("gameReducer", () => {
       expect(next).toBe(s);
     });
 
+    it("does nothing when the card id does not exist in deck", () => {
+      const s = minimalState();
+      const next = gameReducer(s, { type: "flip", cardId: "missing-id" });
+      expect(next).toBe(s);
+    });
+
     it("on match, sets pending match and lock without incrementing matches yet", () => {
       const s = minimalState({ flippedIds: ["c1"] });
       const next = gameReducer(s, { type: "flip", cardId: "c2" });
@@ -112,6 +123,18 @@ describe("gameReducer", () => {
       expect(next.lock).toBe(true);
       expect(next.pendingMismatchIds).toEqual(["c1", "c3"]);
       expect(next.pendingMatchPairKey).toBeNull();
+    });
+
+    it("does nothing when first flipped id is missing from deck (defensive)", () => {
+      const s = minimalState({ flippedIds: ["missing-id"] });
+      const next = gameReducer(s, { type: "flip", cardId: "c3" });
+      expect(next).toBe(s);
+    });
+
+    it("ignores further flips when flippedIds already has more than one card (defensive)", () => {
+      const s = minimalState({ flippedIds: ["c1", "c2"], lock: false });
+      const next = gameReducer(s, { type: "flip", cardId: "c3" });
+      expect(next).toBe(s);
     });
   });
 
