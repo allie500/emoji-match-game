@@ -30,7 +30,7 @@ export default function EmojiCard({
           ? "border-emerald-400/80 bg-emerald-400/10 text-3xl"
           : faceUp
             ? "border-white/20 bg-white/90 text-3xl dark:bg-white/5"
-            : "border-white/10 bg-white/5 text-transparent",
+            : "card-face-down border-slate-400/70 bg-slate-700/25 text-transparent shadow-inner shadow-slate-950/40",
         disabled ? "cursor-not-allowed opacity-80" : "hover:scale-[1.03] active:scale-[0.98]",
       ].join(" ")}
     >

@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .card-face-down {
+    background-color: rgba(148, 163, 184, 0.14);
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(148, 163, 184, 0.26) 0px,
+      rgba(148, 163, 184, 0.26) 8px,
+      rgba(30, 41, 59, 0.18) 8px,
+      rgba(30, 41, 59, 0.18) 16px
+    );
+  }
+}
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
