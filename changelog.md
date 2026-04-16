@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.2] - 2026-04-16
+
+### Added
+
+- Added unit tests and integration tests.
+
+### Changed
+
+- Updated the README.md file to include more information about the project.
+- Updated the index.html file to include more information about the project.
+
 ## [0.0.1] - 2026-04-16
 
 ### Added
