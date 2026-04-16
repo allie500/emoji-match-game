@@ -28,4 +28,10 @@ export interface GameState {
    * show the pair briefly, then flip them back.
    */
   pendingMismatchIds: [CardId, CardId] | null;
+
+  /**
+   * When a match happens, we briefly keep both cards face-up before marking
+   * them as solved (green).
+   */
+  pendingMatchPairKey: string | null;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from "react";
 import Board from "./components/Board";
-import { createGame, gameReducer, MISMATCH_DELAY_MS } from "./game/game";
+import { createGame, gameReducer, MATCH_DELAY_MS, MISMATCH_DELAY_MS } from "./game/game";
 import type { CardId } from "./game/types";
 
 const NUM_PAIRS = 8;
@@ -14,10 +14,13 @@ function App() {
   useEffect(() => {
     if (!state.lock) return;
 
-    const t = window.setTimeout(() => dispatch({ type: "resolveMismatch" }), MISMATCH_DELAY_MS);
+    const delayMs = state.pendingMatchPairKey ? MATCH_DELAY_MS : MISMATCH_DELAY_MS;
+    const actionType = state.pendingMatchPairKey ? "resolveMatch" : "resolveMismatch";
+
+    const t = window.setTimeout(() => dispatch({ type: actionType }), delayMs);
 
     return () => window.clearTimeout(t);
-  }, [state.lock]);
+  }, [state.lock, state.pendingMatchPairKey]);
 
   const onCardClick = (cardId: CardId) => {
     dispatch({ type: "flip", cardId });

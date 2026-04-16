@@ -2,6 +2,7 @@ import type { CardId, GameCard, GameState } from "./types";
 import { DEFAULT_EMOJIS, pickEmojis } from "./emojiPool";
 
 export const MISMATCH_DELAY_MS = 750;
+export const MATCH_DELAY_MS = 250;
 
 export interface CreateGameConfig {
   numPairs: number;
@@ -59,12 +60,14 @@ export function createGame(config: CreateGameConfig): GameState {
     numPairs,
     lock: false,
     pendingMismatchIds: null,
+    pendingMatchPairKey: null,
   };
 }
 
 export type GameAction =
   | { type: "flip"; cardId: CardId }
   | { type: "resolveMismatch" }
+  | { type: "resolveMatch" }
   | { type: "reset"; next: GameState };
 
 function findCard(deck: GameCard[], cardId: CardId): GameCard | undefined {
@@ -96,14 +99,12 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         const nextMoves = state.moves + 1;
 
         if (firstCard.pairKey === card.pairKey) {
-          const nextMatched = new Set(state.matchedPairKeys);
-          nextMatched.add(card.pairKey);
           return {
             ...state,
-            flippedIds: [],
-            matchedPairKeys: nextMatched,
+            flippedIds: [firstId, card.id],
             moves: nextMoves,
-            matches: state.matches + 1,
+            lock: true,
+            pendingMatchPairKey: card.pairKey,
           };
         }
 
@@ -113,6 +114,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
           moves: nextMoves,
           lock: true,
           pendingMismatchIds: [firstId, card.id],
+          pendingMatchPairKey: null,
         };
       }
 
@@ -126,6 +128,24 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         ...state,
         flippedIds: [],
         lock: false,
+        pendingMismatchIds: null,
+        pendingMatchPairKey: null,
+      };
+    }
+
+    case "resolveMatch": {
+      if (!state.lock || !state.pendingMatchPairKey) return state;
+
+      const nextMatched = new Set(state.matchedPairKeys);
+      nextMatched.add(state.pendingMatchPairKey);
+
+      return {
+        ...state,
+        flippedIds: [],
+        matchedPairKeys: nextMatched,
+        matches: state.matches + 1,
+        lock: false,
+        pendingMatchPairKey: null,
         pendingMismatchIds: null,
       };
     }
