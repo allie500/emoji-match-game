@@ -1,8 +1,9 @@
-<!-- markdownlint-disable MD041 -->
-## Description
+# Description
+
 <!-- Provide a brief overview of the changes in this pull request. -->
 
 ## Related Issues
+
 <!-- Link to related issues or tasks here (e.g., Fixes #123, Related to #456). -->
 
 ## Type of Change
@@ -20,4 +21,5 @@
 - [ ] I have made corresponding changes to the documentation.
 
 ## Screenshots (if applicable)
+
 <!-- Add screenshots or screen recordings to help the reviewer understand the UI changes. -->
