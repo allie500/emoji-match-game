@@ -1,6 +1,18 @@
+<!-- markdownlint-disable MD024 -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [0.0.3] - 2026-04-17
+
+### Added
+
+- Added a pull request template to the project.
+
+### Changed
+
+- Updated the changelog.md file to include the changes in this pull request.
 
 ## [0.0.2] - 2026-04-16
 
