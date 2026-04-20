@@ -9,6 +9,7 @@
 ## Type of Change
 
 - [ ] Bug fix
+- [ ] Enhancement
 - [ ] New feature
 - [ ] Chore: update dependencies or other housekeeping
 - [ ] Documentation update
