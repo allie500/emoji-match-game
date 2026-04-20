@@ -10,8 +10,15 @@ export default defineConfig({
     setupFiles: ["./src/test/setup.ts"],
     coverage: {
       provider: "v8",
-      include: ["src/game/**", "src/components/**"],
+      include: ["src/game/**", "src/components/**", "src/audio/**"],
       exclude: ["**/*.test.{ts,tsx}", "**/setup.ts"],
+      thresholds: {
+        perFile: true,
+        lines: 100,
+        functions: 100,
+        branches: 100,
+        statements: 100,
+      },
     },
   },
 });

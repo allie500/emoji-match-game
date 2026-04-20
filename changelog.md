@@ -4,6 +4,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.5] - 2026-04-20
+
+### Added
+
+- Added game sound effect support with a centralized audio utility and dedicated audio asset directory under `src/assets/audio`.
+- Added a new `src/audio/sfx.test.ts` suite covering playback reuse, error handling, and no-audio runtime behavior.
+
+### Changed
+
+- Wired sound triggers for card flip, mismatch resolution, reset, successful match, and win events in the app flow.
+- Updated `App` tests to assert sound-effect calls for gameplay and win conditions.
+- Tightened coverage enforcement to require per-file 100% statements/branches/functions/lines for `src/game/**`, `src/components/**`, and `src/audio/**`.
+
 ## [0.0.4] - 2026-04-20
 
 ### Changed
