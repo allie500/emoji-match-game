@@ -59,6 +59,10 @@
     background: rgb(255 255 255 / 0.9);
   }
 
+  .emoji-card.is-face-up .card-front {
+    border-color: rgb(74 222 128 / 0.8);
+  }
+
   .emoji-card.is-matched .card-front {
     border-color: rgb(74 222 128 / 0.8);
     background: rgb(74 222 128 / 0.1);
