@@ -29,7 +29,7 @@ export default function EmojiCard({
         "emoji-card relative w-full aspect-square rounded-xl transition-transform duration-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
         cardStateClass,
-        disabled ? "cursor-not-allowed opacity-80" : "hover:scale-[1.03] active:scale-[0.98]",
+        disabled ? "cursor-not-allowed" : "hover:scale-[1.03] active:scale-[0.98]",
       ].join(" ")}
     >
       <span className="card-flip-inner">
