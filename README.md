@@ -130,6 +130,11 @@ Typical deployment flow:
 emoji-match-game/
 ├─ public/                  # Static assets served as-is
 ├─ src/
+│  ├─ assets/
+│  │  └─ audio/             # Sound effect files used by the game
+│  ├─ audio/
+│  │  ├─ sfx.ts             # Centralized sound effect loading/playback utility
+│  │  └─ sfx.test.ts        # Unit tests for audio utility behavior
 │  ├─ components/
 │  │  ├─ Board.tsx          # Game board layout, stats, reset controls
 │  │  └─ EmojiCard.tsx      # Individual card UI + flip state rendering
