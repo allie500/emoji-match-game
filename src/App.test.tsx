@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import App from "./App";
+import { playSfx } from "./audio/sfx";
 import { MATCH_DELAY_MS, MISMATCH_DELAY_MS } from "./game/game";
 
 const { mockEmojis } = vi.hoisted(() => ({
@@ -28,6 +29,10 @@ vi.mock("./game/game", async (importOriginal) => {
   };
 });
 
+vi.mock("./audio/sfx", () => ({
+  playSfx: vi.fn(),
+}));
+
 function getCardButtons() {
   return screen.getAllByRole("button", { name: /Card hidden|Card:/ });
 }
@@ -35,6 +40,7 @@ function getCardButtons() {
 describe("App", () => {
   beforeEach(() => {
     vi.useFakeTimers();
+    vi.mocked(playSfx).mockClear();
   });
 
   afterEach(() => {
@@ -63,6 +69,7 @@ describe("App", () => {
     });
 
     expect(within(stats!).getByText("1/8", { exact: false })).toBeInTheDocument();
+    expect(playSfx).toHaveBeenCalledWith("successfulMatch");
   });
 
   it("after a mismatch, flips cards back after MISMATCH_DELAY_MS", () => {
@@ -79,5 +86,38 @@ describe("App", () => {
     });
 
     expect(screen.getAllByRole("button", { name: "Card hidden" })).toHaveLength(16);
+    expect(playSfx).toHaveBeenCalledWith("mismatchFlipDown");
+  });
+
+  it("plays card flip sound when clicking a card", () => {
+    render(<App />);
+
+    fireEvent.click(getCardButtons()[0]);
+
+    expect(playSfx).toHaveBeenCalledWith("cardFlipUp");
+  });
+
+  it("plays reset board sound when reset is clicked", () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Reset" }));
+
+    expect(playSfx).toHaveBeenCalledWith("resetBoard");
+  });
+
+  it("plays win sound once when the board is completed", () => {
+    render(<App />);
+
+    const cards = getCardButtons();
+    for (let i = 0; i < mockEmojis.length; i++) {
+      fireEvent.click(cards[i * 2]);
+      fireEvent.click(cards[i * 2 + 1]);
+      act(() => {
+        vi.advanceTimersByTime(MATCH_DELAY_MS);
+      });
+    }
+
+    const winCalls = vi.mocked(playSfx).mock.calls.filter(([effect]) => effect === "youWon");
+    expect(winCalls).toHaveLength(1);
   });
 });
