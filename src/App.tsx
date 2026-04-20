@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
+import { playSfx } from "./audio/sfx";
 import Board from "./components/Board";
 import { createGame, gameReducer, MATCH_DELAY_MS, MISMATCH_DELAY_MS } from "./game/game";
 import type { CardId } from "./game/types";
@@ -10,23 +11,42 @@ function App() {
   const [state, dispatch] = useReducer(gameReducer, undefined, () =>
     createGame({ numPairs: NUM_PAIRS }),
   );
+  const hasPlayedWinSfxRef = useRef(false);
 
   useEffect(() => {
     if (!state.lock) return;
 
-    const delayMs = state.pendingMatchPairKey ? MATCH_DELAY_MS : MISMATCH_DELAY_MS;
-    const actionType = state.pendingMatchPairKey ? "resolveMatch" : "resolveMismatch";
+    const isMatch = Boolean(state.pendingMatchPairKey);
+    const delayMs = isMatch ? MATCH_DELAY_MS : MISMATCH_DELAY_MS;
+    const actionType = isMatch ? "resolveMatch" : "resolveMismatch";
 
-    const t = window.setTimeout(() => dispatch({ type: actionType }), delayMs);
+    const t = window.setTimeout(() => {
+      dispatch({ type: actionType });
+      playSfx(isMatch ? "successfulMatch" : "mismatchFlipDown");
+    }, delayMs);
 
     return () => window.clearTimeout(t);
   }, [state.lock, state.pendingMatchPairKey]);
 
+  useEffect(() => {
+    const hasWon = state.matches >= state.numPairs && state.numPairs > 0;
+    if (!hasWon) {
+      hasPlayedWinSfxRef.current = false;
+      return;
+    }
+
+    if (hasPlayedWinSfxRef.current) return;
+    hasPlayedWinSfxRef.current = true;
+    playSfx("youWon");
+  }, [state.matches, state.numPairs]);
+
   const onCardClick = (cardId: CardId) => {
+    playSfx("cardFlipUp");
     dispatch({ type: "flip", cardId });
   };
 
   const onReset = () => {
+    playSfx("resetBoard");
     dispatch({ type: "reset", next: createGame({ numPairs: NUM_PAIRS }) });
   };
 
