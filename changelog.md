@@ -4,6 +4,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.6] - 2026-04-22
+
+### Added
+
+- Added a new app footer with a dynamic year copyright notice and a centered GitHub repo link with accessible metadata.
+- Added legal/info modal support for `Credits`, `Terms of Use`, and `Privacy Policy` via new `Footer` and reusable `InfoModal` components.
+- Added dedicated unit test suites for `Footer` and `InfoModal`, plus an app-level assertion that footer content renders with the game UI.
+
+### Changed
+
+- Updated the credits modal placeholder text to include attribution for Pixabay sound effects.
+- Refined footer layout so copyright, centered GitHub icon, and legal links align cleanly across screen sizes.
+
 ## [0.0.5] - 2026-04-20
 
 ### Added

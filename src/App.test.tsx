@@ -53,6 +53,14 @@ describe("App", () => {
     expect(screen.getByText(/Flip two cards to find matching emojis/)).toBeInTheDocument();
   });
 
+  it("renders footer content with legal links", () => {
+    render(<App />);
+    expect(screen.getByText(/Copyright \d{4} Emoji Match Game\./)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Credits" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Terms of Use" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Privacy Policy" })).toBeInTheDocument();
+  });
+
   it("after a matching pair, increments matches only after MATCH_DELAY_MS", () => {
     render(<App />);
 
