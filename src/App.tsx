@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef } from "react";
 import { playSfx } from "./audio/sfx";
 import Board from "./components/Board";
+import Footer from "./components/Footer";
 import { createGame, gameReducer, MATCH_DELAY_MS, MISMATCH_DELAY_MS } from "./game/game";
 import type { CardId } from "./game/types";
 
@@ -71,6 +72,8 @@ function App() {
         onCardClick={onCardClick}
         onReset={onReset}
       />
+
+      <Footer />
     </div>
   );
 }
