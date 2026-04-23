@@ -4,6 +4,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.8] - 2026-04-23
+
+### Added
+
+- Added `husky` and `lint-staged` as dev dependencies to support repo-managed pre-commit checks.
+- Added a new `.husky/pre-commit` hook that runs `lint-staged` so only staged files are validated at commit time.
+
+### Changed
+
+- Added a `prepare` script in `package.json` so Husky hooks are installed automatically after dependency install.
+- Configured `lint-staged` to run ESLint on staged JS/TS files and Prettier write on staged code/config/docs files.
+- Updated `README.md` with a dedicated pre-commit workflow section and clarified that tests/build/Pa11y checks are enforced in PR GitHub Actions.
+
 ## [0.0.7] - 2026-04-23
 
 ### Added
