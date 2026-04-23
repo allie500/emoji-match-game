@@ -27,7 +27,7 @@ export default function Footer() {
   return (
     <>
       <footer className="mt-8 w-full max-w-2xl border-t border-slate-700 pt-4">
-        <div className="grid gap-3 text-center text-sm text-slate-400 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+        <div className="grid gap-3 text-center text-sm text-slate-500 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
           <p className="sm:text-left">Copyright {year} Emoji Match Game.</p>
           <a
             href={GITHUB_REPO_URL}
@@ -49,21 +49,21 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 sm:justify-end">
             <button
               type="button"
-              className="hover:text-slate-200"
+              className="text-slate-500 hover:text-slate-700"
               onClick={() => setActiveModal("credits")}
             >
               Credits
             </button>
             <button
               type="button"
-              className="hover:text-slate-200"
+              className="text-slate-500 hover:text-slate-700"
               onClick={() => setActiveModal("terms")}
             >
               Terms of Use
             </button>
             <button
               type="button"
-              className="hover:text-slate-200"
+              className="text-slate-500 hover:text-slate-700"
               onClick={() => setActiveModal("privacy")}
             >
               Privacy Policy
