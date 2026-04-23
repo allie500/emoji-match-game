@@ -17,7 +17,7 @@ describe("Footer", () => {
       "title",
       "This project is open source. View the code on Github.",
     );
-    expect(githubLink).toHaveAttribute("href", "https://github.com/example/emoji-match-game");
+    expect(githubLink).toHaveAttribute("href", "https://github.com/allie500/emoji-match-game");
   });
 
   it("renders all legal links", () => {
