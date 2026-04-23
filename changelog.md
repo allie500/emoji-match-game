@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Added a `prepare` script in `package.json` so Husky hooks are installed automatically after dependency install.
 - Configured `lint-staged` to run ESLint on staged JS/TS files and Prettier write on staged code/config/docs files.
 - Updated `README.md` with a dedicated pre-commit workflow section and clarified that tests/build/Pa11y checks are enforced in PR GitHub Actions.
+- Updated `.github/pull_request_template.md` to add a `How to test` section for clearer reviewer validation steps.
 
 ## [0.0.7] - 2026-04-23
 
