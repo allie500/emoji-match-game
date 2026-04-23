@@ -1,0 +1,12 @@
+{
+  "actions": [
+    "wait for element .emoji-card to be visible",
+    "click element .emoji-card:not([disabled])",
+    "wait for element .emoji-card.is-face-up to be visible"
+  ],
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox"]
+  },
+  "timeout": 30000,
+  "wait": 500
+}
