@@ -70,6 +70,22 @@ Auto-fix formatting:
 npm run format
 ```
 
+## Git Hooks (Pre-commit)
+
+This repo uses `husky` + `lint-staged` for local pre-commit checks.
+
+- On `git commit`, only staged files are checked.
+- Pre-commit runs:
+  - ESLint on staged `*.js`, `*.jsx`, `*.ts`, `*.tsx`
+  - Prettier write on staged code/config/docs files
+- If a check fails, the commit is blocked until issues are fixed.
+
+If hooks are missing locally after install, run:
+
+```bash
+npm run prepare
+```
+
 ## Tests
 
 Run the unit test suite once:
@@ -113,6 +129,8 @@ npm run a11y:faceup
 ```
 
 Recommended workflow: run both commands. The default scan validates the initial load state, and the face-up config scan validates an interacted state while still checking the rest of the page (header, footer, and other non-hidden content).
+
+Tests, build checks, and Pa11y scans are intended to be enforced by GitHub Actions on open PRs, not by local pre-commit hooks.
 
 ## Production Build
 

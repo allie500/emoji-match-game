@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "prepare": "husky",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview",
@@ -20,6 +21,10 @@
   "dependencies": {
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --max-warnings=0",
+    "*.{js,jsx,ts,tsx,css,scss,md,json,yml,yaml,html}": "prettier --write"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
@@ -36,7 +41,9 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "husky": "^9.1.7",
     "jsdom": "^29.0.2",
+    "lint-staged": "^16.4.0",
     "pa11y": "^9.1.1",
     "postcss": "^8.5.10",
     "prettier": "^3.8.3",
