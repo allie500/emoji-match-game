@@ -4,6 +4,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.7] - 2026-04-23
+
+### Added
+
+- Added project-local Pa11y support as a dev dependency and introduced a dedicated `pa11y.faceup.json` config to validate an interacted game state (flip one card before scanning).
+- Added npm scripts for accessibility workflows: `a11y:install-chrome`, `a11y`, and `a11y:faceup`.
+
+### Changed
+
+- Improved text color contrast in the game header, board stats, and footer/link actions to satisfy WCAG AA checks reported by Pa11y.
+- Updated `README.md` with step-by-step accessibility testing instructions, including Chrome-for-Testing install and both initial-state and face-up-state scan commands.
+
 ## [0.0.6] - 2026-04-22
 
 ### Added

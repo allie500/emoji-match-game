@@ -92,6 +92,28 @@ npm run test:coverage
 
 Tests use **Vitest** with **jsdom** and **React Testing Library**. Configuration lives in `vite.config.ts` (`test` section); shared setup is in `src/test/setup.ts`.
 
+## Accessibility Testing (Pa11y)
+
+Install Chrome for Testing (required by Pa11y/Puppeteer):
+
+```bash
+npm run a11y:install-chrome
+```
+
+Run the default page scan:
+
+```bash
+npm run a11y
+```
+
+Run the face-up card scenario (uses `pa11y.faceup.json` to click a card before scanning):
+
+```bash
+npm run a11y:faceup
+```
+
+Recommended workflow: run both commands. The default scan validates the initial load state, and the face-up config scan validates an interacted state while still checking the rest of the page (header, footer, and other non-hidden content).
+
 ## Production Build
 
 Create an optimized production build:
