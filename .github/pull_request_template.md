@@ -21,6 +21,10 @@
 - [ ] I have written unit tests to cover the changes in this pull request, or explained why no tests are needed in the pull request description.
 - [ ] I have made corresponding changes to the documentation, or explained why no documentation is needed in the pull request description.
 
+## How to test
+
+<!-- Provide step-by-step instructions a reviewer can follow to validate this change locally. -->
+
 ## Screenshots (if applicable)
 
 <!-- Add screenshots or screen recordings to help the reviewer understand the UI changes. -->
