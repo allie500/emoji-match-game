@@ -29,12 +29,20 @@ jobs:
       - name: Start app and run a11y checks
         run: |
           npm run dev -- --host 0.0.0.0 --port 5173 &
-          for i in {1..60}; do
-            if curl -fsS http://localhost:5173 > /dev/null; then
+          echo "Waiting for Vite at http://localhost:5173/ (up to 60s)…"
+          ready=0
+          for i in $(seq 1 60); do
+            if curl -fsS -o /dev/null --connect-timeout 2 "http://localhost:5173" 2>/dev/null; then
+              ready=1
+              echo "Dev server responded (check $i/60)."
               break
             fi
             sleep 1
           done
-          curl -fsS http://localhost:5173 > /dev/null
+          if [ "$ready" -ne 1 ]; then
+            echo "Error: dev server did not become reachable at http://localhost:5173/ within 60s."
+            curl -v http://localhost:5173/ || true
+            exit 1
+          fi
           npm run a11y:ci
           npm run a11y:faceup
