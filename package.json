@@ -16,6 +16,7 @@
     "test:coverage": "vitest run --coverage",
     "a11y:install-chrome": "npx puppeteer browsers install chrome",
     "a11y": "pa11y http://localhost:5173",
+    "a11y:ci": "pa11y http://localhost:5173 --config ./pa11y.ci.json",
     "a11y:faceup": "pa11y http://localhost:5173 --config ./pa11y.faceup.json"
   },
   "dependencies": {
