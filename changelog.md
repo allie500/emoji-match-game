@@ -4,6 +4,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.9] - 2026-04-24
+
+### Added
+
+- GitHub Actions workflows for open, non-draft pull requests: `tests`, `coverage`, `lint`, `format-check`, `build`, and `a11y` (triggers: `pull_request` with `opened`, `reopened`, `synchronize`, `ready_for_review`; jobs skip draft PRs).
+- `pa11y.ci.json` and npm script `a11y:ci` so Pa11y uses Chrome with `--no-sandbox` in Linux CI (GitHub Actions).
+
+### Changed
+
+- Accessibility workflow runs `npm run a11y:ci` and `npm run a11y:faceup` after starting the Vite dev server, matching local Pa11y usage.
+
 ## [0.0.8] - 2026-04-23
 
 ### Added
