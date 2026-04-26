@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import App from "./App";
 import { playSfx } from "./audio/sfx";
 import { MATCH_DELAY_MS, MISMATCH_DELAY_MS } from "./game/game";
+import { WIN_ZOOM_MS } from "./components/WinOverlay";
 
 const { mockEmojis } = vi.hoisted(() => ({
   mockEmojis: ["🍕", "🍔", "🍟", "🌮", "🌯", "🥑", "🍣", "🍜"],
@@ -22,6 +23,7 @@ vi.mock("./game/game", async (importOriginal) => {
       moves: 0,
       matches: 0,
       numPairs: 8,
+      winningEmoji: null,
       lock: false,
       pendingMismatchIds: null,
       pendingMatchPairKey: null,
@@ -127,5 +129,27 @@ describe("App", () => {
 
     const winCalls = vi.mocked(playSfx).mock.calls.filter(([effect]) => effect === "youWon");
     expect(winCalls).toHaveLength(1);
+  });
+
+  it("shows win overlay content after final match animation and play again resets game", () => {
+    render(<App />);
+
+    const cards = getCardButtons();
+    for (let i = 0; i < mockEmojis.length; i++) {
+      fireEvent.click(cards[i * 2]);
+      fireEvent.click(cards[i * 2 + 1]);
+      act(() => {
+        vi.advanceTimersByTime(MATCH_DELAY_MS);
+      });
+    }
+
+    expect(screen.queryByText("YOU WON")).not.toBeInTheDocument();
+    act(() => {
+      vi.advanceTimersByTime(WIN_ZOOM_MS);
+    });
+    expect(screen.getByText("YOU WON")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Play Again" }));
+    expect(screen.getByText(/Matches:/).closest("div")).toHaveTextContent("0/8");
   });
 });

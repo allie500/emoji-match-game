@@ -46,6 +46,7 @@ describe("createGame", () => {
     expect(state.moves).toBe(0);
     expect(state.matches).toBe(0);
     expect(state.numPairs).toBe(2);
+    expect(state.winningEmoji).toBeNull();
     expect(state.lock).toBe(false);
     expect(state.pendingMismatchIds).toBeNull();
     expect(state.pendingMatchPairKey).toBeNull();
@@ -66,6 +67,7 @@ function minimalState(overrides: Partial<GameState> = {}): GameState {
     moves: 0,
     matches: 0,
     numPairs: 2,
+    winningEmoji: null,
     lock: false,
     pendingMismatchIds: null,
     pendingMatchPairKey: null,
@@ -159,6 +161,29 @@ describe("gameReducer", () => {
       expect(next.flippedIds).toEqual([]);
       expect(next.lock).toBe(false);
       expect(next.pendingMatchPairKey).toBeNull();
+      expect(next.winningEmoji).toBeNull();
+    });
+
+    it("stores winningEmoji only when final match completes the game", () => {
+      const nonFinal = minimalState({
+        lock: true,
+        flippedIds: ["c1", "c2"],
+        pendingMatchPairKey: "a",
+        matches: 0,
+        numPairs: 2,
+      });
+      const nonFinalNext = gameReducer(nonFinal, { type: "resolveMatch" });
+      expect(nonFinalNext.winningEmoji).toBeNull();
+
+      const finalMatch = minimalState({
+        lock: true,
+        flippedIds: ["c3", "c4"],
+        pendingMatchPairKey: "b",
+        matches: 1,
+        numPairs: 2,
+      });
+      const finalNext = gameReducer(finalMatch, { type: "resolveMatch" });
+      expect(finalNext.winningEmoji).toBe("b");
     });
   });
 
