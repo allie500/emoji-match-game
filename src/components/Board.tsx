@@ -1,5 +1,6 @@
 import type { CardId, GameCard } from "../game/types";
 import EmojiCard from "./EmojiCard";
+import WinOverlay from "./WinOverlay";
 
 export interface BoardProps {
   cards: GameCard[];
@@ -10,6 +11,7 @@ export interface BoardProps {
   moves: number;
   matches: number;
   numPairs: number;
+  winningEmoji: string | null;
   onCardClick: (cardId: CardId) => void;
   onReset: () => void;
 }
@@ -23,6 +25,7 @@ export default function Board({
   moves,
   matches,
   numPairs,
+  winningEmoji,
   onCardClick,
   onReset,
 }: BoardProps) {
@@ -73,10 +76,10 @@ export default function Board({
         >
           Reset
         </button>
-        {isComplete ? (
-          <p className="text-sm sm:text-base text-emerald-400 font-semibold">You won!</p>
-        ) : null}
       </div>
+      {isComplete && winningEmoji ? (
+        <WinOverlay emoji={winningEmoji} onPlayAgain={onReset} />
+      ) : null}
     </div>
   );
 }
