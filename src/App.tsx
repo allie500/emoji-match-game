@@ -54,7 +54,7 @@ function App() {
   return (
     <div className="min-h-[100svh] flex flex-col items-center justify-center px-4 py-8">
       <header className="w-full max-w-2xl text-center mb-6">
-        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Emoji Match</h1>
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">🤔 Emoji Match 🎉</h1>
         <p className="mt-2 text-sm sm:text-base text-slate-500">
           Flip two cards to find matching emojis.
         </p>

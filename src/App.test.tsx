@@ -49,7 +49,7 @@ describe("App", () => {
 
   it("renders title and instructions", () => {
     render(<App />);
-    expect(screen.getByRole("heading", { name: "Emoji Match" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "🤔 Emoji Match 🎉" })).toBeInTheDocument();
     expect(screen.getByText(/Flip two cards to find matching emojis/)).toBeInTheDocument();
   });
 
