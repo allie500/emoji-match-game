@@ -69,6 +69,7 @@ function App() {
         moves={state.moves}
         matches={state.matches}
         numPairs={state.numPairs}
+        winningEmoji={state.winningEmoji}
         onCardClick={onCardClick}
         onReset={onReset}
       />
