@@ -67,36 +67,41 @@ export default function WinOverlay({ emoji, onPlayAgain }: WinOverlayProps) {
       <section
         role="dialog"
         aria-modal="true"
-        aria-labelledby="win-title"
-        className="relative z-10 flex flex-col items-center gap-4 rounded-2xl border border-white/15 bg-slate-900/80 px-8 py-10 shadow-2xl"
+        aria-labelledby={showContent ? "win-title" : undefined}
+        className="relative z-10 box-border grid w-[min(26rem,90vw)] max-w-full shrink-0 grid-rows-[minmax(4rem,auto)_minmax(0,1fr)_minmax(3.5rem,auto)] gap-3 rounded-2xl border border-white/15 bg-slate-900/80 p-8 aspect-square shadow-2xl sm:gap-4 sm:p-10"
       >
-        {showContent ? (
-          <h2 id="win-title" className="text-3xl sm:text-4xl font-bold tracking-wide text-white">
-            YOU WON
-          </h2>
-        ) : (
-          <div className="h-11" aria-hidden="true" />
-        )}
-
-        <div
-          data-testid="winning-emoji"
-          className="win-emoji-zoom text-7xl sm:text-8xl leading-none"
-          style={{ animationDuration: `${WIN_ZOOM_MS}ms` }}
-        >
-          {emoji}
+        <div className="flex min-h-[4rem] items-end justify-center">
+          {showContent ? (
+            <h2
+              id="win-title"
+              className="text-center text-3xl font-bold tracking-wide text-white sm:text-4xl"
+            >
+              YOU WON
+            </h2>
+          ) : null}
         </div>
 
-        {showContent ? (
-          <button
-            type="button"
-            onClick={onPlayAgain}
-            className="mt-1 px-4 py-2 rounded-lg bg-fuchsia-600 text-white hover:bg-fuchsia-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+        <div className="flex min-h-0 items-center justify-center">
+          <div
+            data-testid="winning-emoji"
+            className="win-emoji-zoom text-7xl leading-none sm:text-8xl"
+            style={{ animationDuration: `${WIN_ZOOM_MS}ms` }}
           >
-            Play Again
-          </button>
-        ) : (
-          <div className="h-10" aria-hidden="true" />
-        )}
+            {emoji}
+          </div>
+        </div>
+
+        <div className="flex min-h-[3.5rem] items-start justify-center">
+          {showContent ? (
+            <button
+              type="button"
+              onClick={onPlayAgain}
+              className="rounded-lg bg-fuchsia-600 px-4 py-2 text-white hover:bg-fuchsia-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+            >
+              Play Again
+            </button>
+          ) : null}
+        </div>
       </section>
     </div>
   );
