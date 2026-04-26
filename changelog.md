@@ -4,6 +4,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.12] - 2026-04-26
+
+### Added
+
+- Win celebration overlay when the board is cleared: the last matched emoji animates in at the center, “YOU WON” and a “Play Again” control appear. Implemented in `src/components/WinOverlay.tsx` with styles in `src/index.css`.
+- `winningEmoji` on `GameState` so the UI can show the final pair’s emoji; set in `resolveMatch` on the winning match, cleared on new game.
+
+### Changed
+
+- `src/components/Board.tsx` and `src/App.tsx` pass `winningEmoji` and render the overlay instead of the previous inline “You won!” line beside Reset.
+- Extended tests in `src/game/game.test.ts`, `src/components/Board.test.tsx`, and `src/App.test.tsx`, plus new `src/components/WinOverlay.test.tsx`, to cover the feature and keep coverage thresholds green.
+
 ## [0.0.11] - 2026-04-26
 
 ### Changed
