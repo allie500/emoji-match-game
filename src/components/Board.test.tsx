@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Board from "./Board";
 import type { GameCard } from "../game/types";
+import { WIN_ZOOM_MS } from "./WinOverlay";
 
 const sampleCards: GameCard[] = [
   { id: "c1", emoji: "🍕", pairKey: "🍕" },
@@ -22,6 +23,7 @@ describe("Board", () => {
         moves={3}
         matches={1}
         numPairs={2}
+        winningEmoji={null}
         onCardClick={vi.fn()}
         onReset={vi.fn()}
       />,
@@ -43,6 +45,7 @@ describe("Board", () => {
         moves={0}
         matches={0}
         numPairs={2}
+        winningEmoji={null}
         onCardClick={vi.fn()}
         onReset={onReset}
       />,
@@ -51,7 +54,9 @@ describe("Board", () => {
     expect(onReset).toHaveBeenCalledTimes(1);
   });
 
-  it("shows You won! when matches reach numPairs", () => {
+  it("shows the win overlay and lets user play again", async () => {
+    const onReset = vi.fn();
+    vi.useFakeTimers();
     render(
       <Board
         cards={sampleCards}
@@ -62,11 +67,21 @@ describe("Board", () => {
         moves={2}
         matches={2}
         numPairs={2}
+        winningEmoji={"🍔"}
         onCardClick={vi.fn()}
-        onReset={vi.fn()}
+        onReset={onReset}
       />,
     );
-    expect(screen.getByText("You won!")).toBeInTheDocument();
+
+    expect(screen.queryByText("YOU WON")).not.toBeInTheDocument();
+    act(() => {
+      vi.advanceTimersByTime(WIN_ZOOM_MS);
+    });
+    expect(screen.getByText("YOU WON")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Play Again" }));
+    expect(onReset).toHaveBeenCalledTimes(1);
+    vi.useRealTimers();
   });
 
   it("disables card buttons when lock is true", () => {
@@ -80,6 +95,7 @@ describe("Board", () => {
         moves={0}
         matches={0}
         numPairs={2}
+        winningEmoji={null}
         onCardClick={vi.fn()}
         onReset={vi.fn()}
       />,
@@ -102,6 +118,7 @@ describe("Board", () => {
         moves={0}
         matches={0}
         numPairs={2}
+        winningEmoji={null}
         onCardClick={onCardClick}
         onReset={vi.fn()}
       />,

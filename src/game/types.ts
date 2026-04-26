@@ -17,6 +17,7 @@ export interface GameState {
   moves: number;
   matches: number;
   numPairs: number;
+  winningEmoji: string | null;
 
   /**
    * Prevents user interaction while we wait to flip back a mismatched pair.
