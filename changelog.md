@@ -4,6 +4,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.11] - 2026-04-26
+
+### Changed
+
+- Updated the app header title in `src/App.tsx` to render `🤔 Emoji Match 🎉` for a more playful presentation.
+- Updated `src/App.test.tsx` to assert the revised accessible heading text so test coverage remains aligned with the UI change.
+
 ## [0.0.10] - 2026-04-26
 
 ### Added
