@@ -58,6 +58,7 @@ export function createGame(config: CreateGameConfig): GameState {
     moves: 0,
     matches: 0,
     numPairs,
+    winningEmoji: null,
     lock: false,
     pendingMismatchIds: null,
     pendingMatchPairKey: null,
@@ -136,6 +137,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     case "resolveMatch": {
       if (!state.lock || !state.pendingMatchPairKey) return state;
 
+      const nextMatches = state.matches + 1;
+      const isWin = nextMatches >= state.numPairs;
       const nextMatched = new Set(state.matchedPairKeys);
       nextMatched.add(state.pendingMatchPairKey);
 
@@ -143,7 +146,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         ...state,
         flippedIds: [],
         matchedPairKeys: nextMatched,
-        matches: state.matches + 1,
+        matches: nextMatches,
+        winningEmoji: isWin ? state.pendingMatchPairKey : null,
         lock: false,
         pendingMatchPairKey: null,
         pendingMismatchIds: null,
