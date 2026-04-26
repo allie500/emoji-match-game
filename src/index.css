@@ -68,9 +68,80 @@
     background: rgb(74 222 128 / 0.1);
   }
 
+  .win-emoji-zoom {
+    animation-name: win-emoji-zoom-in;
+    animation-timing-function: cubic-bezier(0.17, 0.84, 0.44, 1);
+    animation-fill-mode: both;
+  }
+
+  .win-confetti-piece {
+    position: absolute;
+    top: -12vh;
+    width: 0.5rem;
+    height: 0.95rem;
+    border-radius: 0.125rem;
+    background: #a78bfa;
+    opacity: 0.95;
+    animation-name: win-confetti-drop;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .win-confetti-piece:nth-child(4n + 1) {
+    background: #22d3ee;
+  }
+
+  .win-confetti-piece:nth-child(4n + 2) {
+    background: #a78bfa;
+  }
+
+  .win-confetti-piece:nth-child(4n + 3) {
+    background: #f472b6;
+  }
+
+  .win-confetti-piece:nth-child(4n + 4) {
+    background: #facc15;
+  }
+
+  @keyframes win-emoji-zoom-in {
+    0% {
+      transform: scale(0.1);
+      opacity: 0;
+    }
+    70% {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes win-confetti-drop {
+    0% {
+      transform: translateY(-10vh) rotate(0deg);
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(115vh) rotate(420deg);
+      opacity: 0.8;
+    }
+  }
+
   @media (prefers-color-scheme: dark) {
     .card-front {
       background: rgb(255 255 255 / 0.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .win-emoji-zoom,
+    .win-confetti-piece {
+      animation: none !important;
     }
   }
 }
