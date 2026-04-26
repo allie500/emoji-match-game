@@ -4,6 +4,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.10] - 2026-04-26
+
+### Added
+
+- Added a new GitHub Actions deploy workflow at `.github/workflows/deploy.yml` to build the app, sync `dist/` to S3, and invalidate CloudFront on `main` branch deploys.
+
+### Changed
+
+- Deployment automation now uses repository secrets `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `AWS_S3_BUCKET`, and `AWS_CLOUDFRONT_DIST_ID`, with serialized deploy execution via workflow concurrency (`group: deploy`, `cancel-in-progress: false`).
+
 ## [0.0.9] - 2026-04-24
 
 ### Added
