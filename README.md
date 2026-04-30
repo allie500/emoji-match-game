@@ -130,7 +130,26 @@ Run the face-up card scenario (uses `pa11y.faceup.json` to click a card before s
 npm run a11y:faceup
 ```
 
-Recommended workflow: run both commands. The default scan validates the initial load state, and the face-up config scan validates an interacted state while still checking the rest of the page (header, footer, and other non-hidden content).
+Run the full 2x2 matrix (light/dark x base/face-up):
+
+```bash
+npm run a11y:matrix
+```
+
+The matrix command covers:
+
+- Base page in light mode
+- Base page in dark mode
+- Face-up interaction in light mode
+- Face-up interaction in dark mode
+
+If your app is running on a non-default URL, set `PA11Y_URL`:
+
+```bash
+PA11Y_URL=http://localhost:4173 npm run a11y:matrix
+```
+
+Recommended workflow: use `npm run a11y:matrix` for complete local coverage. The individual `a11y` and `a11y:faceup` scripts are still useful for quick, targeted checks.
 
 Tests, build checks, and Pa11y scans are intended to be enforced by GitHub Actions on open PRs, not by local pre-commit hooks.
 
