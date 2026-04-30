@@ -4,6 +4,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.13] - 2026-04-30
+
+### Added
+
+- Added a Husky `.husky/pre-push` hook that blocks direct pushes targeting `main`, including explicit refspec pushes.
+
+### Changed
+
+- Updated `README.md` Git Hooks documentation to include the new pre-push protection workflow.
+
 ## [0.0.12] - 2026-04-26
 
 ### Added
