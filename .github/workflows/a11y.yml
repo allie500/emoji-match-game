@@ -44,5 +44,4 @@ jobs:
             curl -v http://localhost:5173/ || true
             exit 1
           fi
-          npm run a11y:ci
-          npm run a11y:faceup
+          npm run a11y:matrix
