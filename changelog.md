@@ -4,6 +4,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.14] - 2026-04-30
+
+### Added
+
+- Added persistent light/dark theme support with a new `src/theme.ts` helper (localStorage preference + system fallback) and a new icon-based pill toggle in `src/App.tsx` (sun/moon).
+- Added a parameterized Pa11y matrix runner at `scripts/run-pa11y-matrix.mjs` plus npm script `a11y:matrix` to cover light/dark x base/face-up scenarios.
+
+### Changed
+
+- Updated global theme token behavior in `src/index.css` to support explicit `data-theme` overrides while still honoring `prefers-color-scheme` when no user preference is set.
+- Updated `src/components/Board.tsx` and `src/components/Footer.tsx` to use theme-aware text/border tokens for better dark-mode contrast.
+- Updated `src/App.test.tsx` for theme toggle semantics/persistence coverage and icon-based toggle assertions.
+- Updated accessibility workflow `.github/workflows/a11y.yml` to run `npm run a11y:matrix`, and refreshed `README.md` Accessibility docs with matrix usage and `PA11Y_URL` override guidance.
+
 ## [0.0.13] - 2026-04-30
 
 ### Added

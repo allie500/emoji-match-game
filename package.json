@@ -17,7 +17,8 @@
     "a11y:install-chrome": "npx puppeteer browsers install chrome",
     "a11y": "pa11y http://localhost:5173",
     "a11y:ci": "pa11y http://localhost:5173 --config ./pa11y.ci.json",
-    "a11y:faceup": "pa11y http://localhost:5173 --config ./pa11y.faceup.json"
+    "a11y:faceup": "pa11y http://localhost:5173 --config ./pa11y.faceup.json",
+    "a11y:matrix": "node ./scripts/run-pa11y-matrix.mjs"
   },
   "dependencies": {
     "react": "^19.2.4",

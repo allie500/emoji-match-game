@@ -34,12 +34,12 @@ export default function Board({
   return (
     <div className="w-full max-w-2xl flex flex-col items-center gap-4">
       <div className="w-full flex items-center justify-between px-2">
-        <div className="text-sm sm:text-base text-slate-500">
-          Moves: <span className="text-slate-600 font-semibold">{moves}</span>
+        <div className="text-sm sm:text-base text-[var(--text-muted)]">
+          Moves: <span className="text-[var(--text-muted-strong)] font-semibold">{moves}</span>
         </div>
-        <div className="text-sm sm:text-base text-slate-500">
+        <div className="text-sm sm:text-base text-[var(--text-muted)]">
           Matches:{" "}
-          <span className="text-slate-600 font-semibold">
+          <span className="text-[var(--text-muted-strong)] font-semibold">
             {matches}/{numPairs}
           </span>
         </div>

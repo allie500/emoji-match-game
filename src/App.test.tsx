@@ -41,6 +41,20 @@ function getCardButtons() {
 
 describe("App", () => {
   beforeEach(() => {
+    window.localStorage.clear();
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: query === "(prefers-color-scheme: dark)",
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
     vi.useFakeTimers();
     vi.mocked(playSfx).mockClear();
   });
@@ -53,6 +67,34 @@ describe("App", () => {
     render(<App />);
     expect(screen.getByRole("heading", { name: "🤔 Emoji Match 🎉" })).toBeInTheDocument();
     expect(screen.getByText(/Flip two cards to find matching emojis/)).toBeInTheDocument();
+  });
+
+  it("uses system dark theme by default and toggles to light mode", () => {
+    render(<App />);
+
+    const themeToggle = screen.getByRole("button", { name: "Switch to light mode" });
+    expect(themeToggle).toHaveAttribute("aria-pressed", "true");
+    expect(themeToggle).toHaveTextContent("☾");
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    expect(window.localStorage.getItem("emoji-match-theme")).toBe("dark");
+
+    fireEvent.click(themeToggle);
+
+    expect(themeToggle).toHaveAttribute("aria-pressed", "false");
+    expect(themeToggle).toHaveAccessibleName("Switch to dark mode");
+    expect(themeToggle).toHaveTextContent("☀");
+    expect(document.documentElement.dataset.theme).toBe("light");
+    expect(window.localStorage.getItem("emoji-match-theme")).toBe("light");
+  });
+
+  it("restores saved theme preference from localStorage", () => {
+    window.localStorage.setItem("emoji-match-theme", "light");
+    render(<App />);
+
+    const themeToggle = screen.getByRole("button", { name: "Switch to dark mode" });
+    expect(themeToggle).toHaveAttribute("aria-pressed", "false");
+    expect(themeToggle).toHaveTextContent("☀");
+    expect(document.documentElement.dataset.theme).toBe("light");
   });
 
   it("renders footer content with legal links", () => {

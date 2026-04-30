@@ -26,8 +26,8 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="mt-8 w-full max-w-2xl border-t border-slate-700 pt-4">
-        <div className="grid gap-3 text-center text-sm text-slate-500 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+      <footer className="mt-8 w-full max-w-2xl border-t border-[var(--border)] pt-4">
+        <div className="grid gap-3 text-center text-sm text-[var(--text-muted)] sm:grid-cols-[1fr_auto_1fr] sm:items-center">
           <p className="sm:text-left">Copyright {year} Emoji Match Game.</p>
           <a
             href={GITHUB_REPO_URL}
@@ -35,7 +35,7 @@ export default function Footer() {
             rel="noreferrer"
             title="This project is open source. View the code on Github."
             aria-label="View source on Github"
-            className="mx-auto rounded-md p-1 text-slate-300 hover:bg-slate-800 hover:text-white"
+            className="mx-auto rounded-md p-1 text-[var(--text-muted)] hover:bg-[var(--social-bg)] hover:text-[var(--text-h)]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -49,21 +49,21 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 sm:justify-end">
             <button
               type="button"
-              className="text-slate-500 hover:text-slate-700"
+              className="text-[var(--text-muted)] hover:text-[var(--text-muted-strong)]"
               onClick={() => setActiveModal("credits")}
             >
               Credits
             </button>
             <button
               type="button"
-              className="text-slate-500 hover:text-slate-700"
+              className="text-[var(--text-muted)] hover:text-[var(--text-muted-strong)]"
               onClick={() => setActiveModal("terms")}
             >
               Terms of Use
             </button>
             <button
               type="button"
-              className="text-slate-500 hover:text-slate-700"
+              className="text-[var(--text-muted)] hover:text-[var(--text-muted-strong)]"
               onClick={() => setActiveModal("privacy")}
             >
               Privacy Policy
