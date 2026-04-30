@@ -62,6 +62,7 @@ function App() {
     setTheme((current) => (current === "dark" ? "light" : "dark"));
   };
   const isDarkTheme = theme === "dark";
+  const nextThemeLabel = isDarkTheme ? "light mode" : "dark mode";
 
   return (
     <div className="min-h-[100svh] flex flex-col items-center justify-center px-4 py-8">
@@ -73,12 +74,22 @@ function App() {
           </h1>
           <button
             type="button"
-            aria-label="Toggle dark mode"
+            aria-label={`Switch to ${nextThemeLabel}`}
             aria-pressed={isDarkTheme}
             onClick={onThemeToggle}
-            className="justify-self-end rounded-lg border border-[var(--border)] bg-[var(--code-bg)] px-3 py-1.5 text-sm font-medium text-[var(--text-h)] transition-colors hover:bg-[var(--social-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500"
+            className="justify-self-end inline-flex h-8 w-16 items-center rounded-full border border-[var(--border)] bg-[var(--code-bg)] px-1 transition-colors hover:bg-[var(--social-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500"
           >
-            {isDarkTheme ? "Dark" : "Light"}
+            <span className="sr-only">
+              {isDarkTheme ? "Dark mode enabled" : "Light mode enabled"}
+            </span>
+            <span
+              className={`flex h-6 w-6 items-center justify-center rounded-full bg-[var(--bg)] text-[var(--text-h)] shadow-sm transition-transform ${
+                isDarkTheme ? "translate-x-8" : "translate-x-0"
+              }`}
+              aria-hidden="true"
+            >
+              {isDarkTheme ? "☾" : "☀"}
+            </span>
           </button>
         </div>
         <p className="mt-2 text-sm sm:text-base text-[var(--text-muted)]">

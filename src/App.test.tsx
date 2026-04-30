@@ -72,16 +72,17 @@ describe("App", () => {
   it("uses system dark theme by default and toggles to light mode", () => {
     render(<App />);
 
-    const themeToggle = screen.getByRole("button", { name: "Toggle dark mode" });
+    const themeToggle = screen.getByRole("button", { name: "Switch to light mode" });
     expect(themeToggle).toHaveAttribute("aria-pressed", "true");
-    expect(themeToggle).toHaveTextContent("Dark");
+    expect(themeToggle).toHaveTextContent("☾");
     expect(document.documentElement.dataset.theme).toBe("dark");
     expect(window.localStorage.getItem("emoji-match-theme")).toBe("dark");
 
     fireEvent.click(themeToggle);
 
     expect(themeToggle).toHaveAttribute("aria-pressed", "false");
-    expect(themeToggle).toHaveTextContent("Light");
+    expect(themeToggle).toHaveAccessibleName("Switch to dark mode");
+    expect(themeToggle).toHaveTextContent("☀");
     expect(document.documentElement.dataset.theme).toBe("light");
     expect(window.localStorage.getItem("emoji-match-theme")).toBe("light");
   });
@@ -90,9 +91,9 @@ describe("App", () => {
     window.localStorage.setItem("emoji-match-theme", "light");
     render(<App />);
 
-    const themeToggle = screen.getByRole("button", { name: "Toggle dark mode" });
+    const themeToggle = screen.getByRole("button", { name: "Switch to dark mode" });
     expect(themeToggle).toHaveAttribute("aria-pressed", "false");
-    expect(themeToggle).toHaveTextContent("Light");
+    expect(themeToggle).toHaveTextContent("☀");
     expect(document.documentElement.dataset.theme).toBe("light");
   });
 
