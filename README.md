@@ -70,15 +70,17 @@ Auto-fix formatting:
 npm run format
 ```
 
-## Git Hooks (Pre-commit)
+## Git Hooks
 
-This repo uses `husky` + `lint-staged` for local pre-commit checks.
+This repo uses `husky` + `lint-staged` for local git hook checks.
 
 - On `git commit`, only staged files are checked.
 - Pre-commit runs:
   - ESLint on staged `*.js`, `*.jsx`, `*.ts`, `*.tsx`
   - Prettier write on staged code/config/docs files
 - If a check fails, the commit is blocked until issues are fixed.
+- On `git push`, direct pushes to `main` are blocked by a Husky pre-push guard.
+- Push feature branches and open a pull request for `main` changes.
 
 If hooks are missing locally after install, run:
 

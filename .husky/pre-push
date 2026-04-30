@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Block direct pushes to main.
+while read -r _ _ remote_ref _
+do
+  case "$remote_ref" in
+    refs/heads/main)
+      echo "Error: direct pushes to 'main' are blocked by Husky pre-push."
+      echo "Push to a feature branch and open a pull request instead."
+      exit 1
+      ;;
+  esac
+done
+
+exit 0
