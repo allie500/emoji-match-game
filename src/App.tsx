@@ -66,14 +66,17 @@ function App() {
   return (
     <div className="min-h-[100svh] flex flex-col items-center justify-center px-4 py-8">
       <header className="w-full max-w-2xl text-center mb-6">
-        <div className="flex items-center justify-between gap-4">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">🤔 Emoji Match 🎉</h1>
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <span aria-hidden="true" />
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight justify-self-center">
+            🤔 Emoji Match 🎉
+          </h1>
           <button
             type="button"
             aria-label="Toggle dark mode"
             aria-pressed={isDarkTheme}
             onClick={onThemeToggle}
-            className="rounded-lg border border-[var(--border)] bg-[var(--code-bg)] px-3 py-1.5 text-sm font-medium text-[var(--text-h)] transition-colors hover:bg-[var(--social-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500"
+            className="justify-self-end rounded-lg border border-[var(--border)] bg-[var(--code-bg)] px-3 py-1.5 text-sm font-medium text-[var(--text-h)] transition-colors hover:bg-[var(--social-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500"
           >
             {isDarkTheme ? "Dark" : "Light"}
           </button>
