@@ -67,9 +67,9 @@ function App() {
   return (
     <div className="min-h-[100svh] flex flex-col items-center justify-center px-4 py-8">
       <header className="w-full max-w-2xl text-center mb-6">
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-          <span aria-hidden="true" />
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight justify-self-center">
+        <div className="flex flex-col items-center gap-2 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-4">
+          <span aria-hidden="true" className="hidden sm:block" />
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight whitespace-nowrap sm:justify-self-center">
             🤔 Emoji Match 🎉
           </h1>
           <button
@@ -77,7 +77,7 @@ function App() {
             aria-label={`Switch to ${nextThemeLabel}`}
             aria-pressed={isDarkTheme}
             onClick={onThemeToggle}
-            className="justify-self-end inline-flex h-8 w-16 items-center rounded-full border border-[var(--border)] bg-[var(--code-bg)] px-1 transition-colors hover:bg-[var(--social-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500"
+            className="inline-flex h-8 w-16 items-center rounded-full border border-[var(--border)] bg-[var(--code-bg)] px-1 transition-colors hover:bg-[var(--social-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500 sm:justify-self-end"
           >
             <span className="sr-only">
               {isDarkTheme ? "Dark mode enabled" : "Light mode enabled"}
