@@ -77,7 +77,7 @@ function App() {
             aria-label={`Switch to ${nextThemeLabel}`}
             aria-pressed={isDarkTheme}
             onClick={onThemeToggle}
-            className="inline-flex h-8 w-16 items-center rounded-full border border-[var(--border)] bg-[var(--code-bg)] px-1 transition-colors hover:bg-[var(--social-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500 sm:justify-self-end"
+            className="mb-1 inline-flex h-8 w-16 items-center rounded-full border border-[var(--border)] bg-[var(--code-bg)] px-1 transition-colors hover:bg-[var(--social-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500 sm:mb-0 sm:justify-self-end"
           >
             <span className="sr-only">
               {isDarkTheme ? "Dark mode enabled" : "Light mode enabled"}
