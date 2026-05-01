@@ -4,6 +4,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.15] - 2026-05-01
+
+### Changed
+
+- Updated `src/App.tsx` header layout on small screens so `🤔 Emoji Match 🎉` remains on a single line while preserving desktop alignment and theme toggle behavior.
+- Added a small mobile-only spacing adjustment beneath the theme toggle in `src/App.tsx` when it renders below the heading.
+
 ## [0.0.14] - 2026-04-30
 
 ### Added
