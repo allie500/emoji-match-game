@@ -1,8 +1,15 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { type ChangeEvent, useEffect, useReducer, useRef, useState } from "react";
 import { playSfx } from "./audio/sfx";
 import Board from "./components/Board";
 import Footer from "./components/Footer";
+import {
+  EMOJI_SET_IDS,
+  EMOJI_SET_LABELS,
+  getEmojisForSet,
+  type EmojiSetId,
+} from "./game/emojiPool";
 import { createGame, gameReducer, MATCH_DELAY_MS, MISMATCH_DELAY_MS } from "./game/game";
+import { isEmojiSetId, persistEmojiSetId, resolveInitialEmojiSetId } from "./game/emojiSetStorage";
 import type { CardId } from "./game/types";
 import { applyTheme, persistTheme, resolveInitialTheme, type Theme } from "./theme";
 
@@ -11,8 +18,9 @@ const COLS = 4;
 
 function App() {
   const [theme, setTheme] = useState<Theme>(() => resolveInitialTheme());
+  const [emojiSetId, setEmojiSetId] = useState<EmojiSetId>(() => resolveInitialEmojiSetId());
   const [state, dispatch] = useReducer(gameReducer, undefined, () =>
-    createGame({ numPairs: NUM_PAIRS }),
+    createGame({ numPairs: NUM_PAIRS, emojis: getEmojisForSet(emojiSetId) }),
   );
   const hasPlayedWinSfxRef = useRef(false);
 
@@ -20,6 +28,10 @@ function App() {
     applyTheme(theme);
     persistTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    persistEmojiSetId(emojiSetId);
+  }, [emojiSetId]);
 
   useEffect(() => {
     if (!state.lock) return;
@@ -55,7 +67,21 @@ function App() {
 
   const onReset = () => {
     playSfx("resetBoard");
-    dispatch({ type: "reset", next: createGame({ numPairs: NUM_PAIRS }) });
+    dispatch({
+      type: "reset",
+      next: createGame({ numPairs: NUM_PAIRS, emojis: getEmojisForSet(emojiSetId) }),
+    });
+  };
+
+  const onEmojiSetChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const nextId = event.target.value;
+    if (!isEmojiSetId(nextId) || nextId === emojiSetId) return;
+    playSfx("resetBoard");
+    setEmojiSetId(nextId);
+    dispatch({
+      type: "reset",
+      next: createGame({ numPairs: NUM_PAIRS, emojis: getEmojisForSet(nextId) }),
+    });
   };
 
   const onThemeToggle = () => {
@@ -97,19 +123,39 @@ function App() {
         </p>
       </header>
 
-      <Board
-        cards={state.deck}
-        cols={COLS}
-        flippedIds={state.flippedIds}
-        matchedPairKeys={state.matchedPairKeys}
-        lock={state.lock}
-        moves={state.moves}
-        matches={state.matches}
-        numPairs={state.numPairs}
-        winningEmoji={state.winningEmoji}
-        onCardClick={onCardClick}
-        onReset={onReset}
-      />
+      <div className="w-full max-w-2xl flex flex-col gap-4">
+        <div className="flex flex-col gap-1.5 px-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+          <label htmlFor="emoji-set" className="text-sm text-[var(--text-muted)] shrink-0">
+            Emoji set
+          </label>
+          <select
+            id="emoji-set"
+            value={emojiSetId}
+            onChange={onEmojiSetChange}
+            className="w-full sm:max-w-xs rounded-lg border border-[var(--border)] bg-[var(--code-bg)] px-3 py-2 text-sm text-[var(--text-h)] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500"
+          >
+            {EMOJI_SET_IDS.map((id) => (
+              <option key={id} value={id}>
+                {EMOJI_SET_LABELS[id]}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <Board
+          cards={state.deck}
+          cols={COLS}
+          flippedIds={state.flippedIds}
+          matchedPairKeys={state.matchedPairKeys}
+          lock={state.lock}
+          moves={state.moves}
+          matches={state.matches}
+          numPairs={state.numPairs}
+          winningEmoji={state.winningEmoji}
+          onCardClick={onCardClick}
+          onReset={onReset}
+        />
+      </div>
 
       <Footer />
     </div>
