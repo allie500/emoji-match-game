@@ -4,6 +4,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.16] - 2026-05-25
+
+### Added
+
+- Emoji set selection: Default, Food, Flags, and Faces pools (20+ emojis each for non-default sets) in `src/game/emojiPool.ts`, with `getEmojisForSet` and related exports.
+- `src/game/emojiSetStorage.ts` plus `emoji-match-emoji-set` localStorage persistence so the chosen set survives reloads and board resets.
+- Labeled emoji set `<select>` above the board in `src/App.tsx`, with `playSfx("resetBoard")` when the set changes mid-game.
+- Tests in `src/game/emojiSetStorage.test.ts`, extended `src/game/emojiPool.test.ts`, and updated `src/App.test.tsx` (including `createGame` mock support for `config.emojis`).
+
 ## [0.0.15] - 2026-05-01
 
 ### Changed
