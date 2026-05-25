@@ -123,16 +123,19 @@ function App() {
         </p>
       </header>
 
-      <div className="w-full max-w-2xl flex flex-col gap-4">
-        <div className="flex flex-col gap-1.5 px-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-          <label htmlFor="emoji-set" className="text-sm text-[var(--text-muted)] shrink-0">
+      <div className="w-full max-w-2xl flex flex-col gap-4 sm:items-center">
+        <div className="flex w-full flex-col gap-1.5 px-2 sm:w-auto sm:flex-row sm:items-center sm:justify-start sm:gap-3">
+          <label
+            htmlFor="emoji-set"
+            className="text-sm sm:text-base text-[var(--text-muted)] shrink-0"
+          >
             Emoji set
           </label>
           <select
             id="emoji-set"
             value={emojiSetId}
             onChange={onEmojiSetChange}
-            className="w-full sm:max-w-xs rounded-lg border border-[var(--border)] bg-[var(--code-bg)] px-3 py-2 text-sm text-[var(--text-h)] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500"
+            className="w-full sm:w-auto sm:max-w-[10rem] rounded-lg border border-[var(--border)] bg-[var(--code-bg)] px-3 py-2 text-sm sm:text-base text-[var(--text-h)] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500"
           >
             {EMOJI_SET_IDS.map((id) => (
               <option key={id} value={id}>
