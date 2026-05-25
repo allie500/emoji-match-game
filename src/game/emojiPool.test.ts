@@ -1,4 +1,38 @@
-import { pickEmojis } from "./emojiPool";
+import {
+  DEFAULT_EMOJIS,
+  FACES_EMOJIS,
+  FLAGS_EMOJIS,
+  FOOD_EMOJIS,
+  getEmojisForSet,
+  pickEmojis,
+} from "./emojiPool";
+
+describe("emoji pools", () => {
+  it("includes at least 20 entries in each set", () => {
+    expect(DEFAULT_EMOJIS.length).toBeGreaterThanOrEqual(20);
+    expect(FOOD_EMOJIS.length).toBeGreaterThanOrEqual(20);
+    expect(FLAGS_EMOJIS.length).toBeGreaterThanOrEqual(20);
+    expect(FACES_EMOJIS.length).toBeGreaterThanOrEqual(20);
+  });
+});
+
+describe("getEmojisForSet", () => {
+  it("returns default pool for default", () => {
+    expect(getEmojisForSet("default")).toBe(DEFAULT_EMOJIS);
+  });
+
+  it("returns food pool containing a known food emoji", () => {
+    expect(getEmojisForSet("food")).toContain("🍎");
+  });
+
+  it("returns flags pool containing a known flag", () => {
+    expect(getEmojisForSet("flags")).toContain("🇺🇸");
+  });
+
+  it("returns faces pool containing a known face", () => {
+    expect(getEmojisForSet("faces")).toContain("😀");
+  });
+});
 
 describe("pickEmojis", () => {
   const pool = ["a", "b", "c", "d", "e"];
