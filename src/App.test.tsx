@@ -1,33 +1,42 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import App from "./App";
 import { playSfx } from "./audio/sfx";
-import { MATCH_DELAY_MS, MISMATCH_DELAY_MS } from "./game/game";
+import { getEmojisForSet } from "./game/emojiPool";
+import { createGame, MATCH_DELAY_MS, MISMATCH_DELAY_MS } from "./game/game";
+import { EMOJI_SET_STORAGE_KEY } from "./game/emojiSetStorage";
 import { WIN_ZOOM_MS } from "./components/WinOverlay";
 
 const { mockEmojis } = vi.hoisted(() => ({
   mockEmojis: ["🍕", "🍔", "🍟", "🌮", "🌯", "🥑", "🍣", "🍜"],
 }));
 
-vi.mock("./game/game", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("./game/game")>();
-  const deck = mockEmojis.flatMap((e, i) => [
+function buildMockGameState(emojis: string[]) {
+  const deck = emojis.flatMap((e, i) => [
     { id: `pair-${i}-a`, emoji: e, pairKey: e },
     { id: `pair-${i}-b`, emoji: e, pairKey: e },
   ]);
   return {
+    deck,
+    flippedIds: [],
+    matchedPairKeys: new Set<string>(),
+    moves: 0,
+    matches: 0,
+    numPairs: 8,
+    winningEmoji: null,
+    lock: false,
+    pendingMismatchIds: null,
+    pendingMatchPairKey: null,
+  };
+}
+
+vi.mock("./game/game", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./game/game")>();
+  return {
     ...actual,
-    createGame: vi.fn(() => ({
-      deck,
-      flippedIds: [],
-      matchedPairKeys: new Set<string>(),
-      moves: 0,
-      matches: 0,
-      numPairs: 8,
-      winningEmoji: null,
-      lock: false,
-      pendingMismatchIds: null,
-      pendingMatchPairKey: null,
-    })),
+    createGame: vi.fn((config?: { numPairs?: number; emojis?: string[] }) => {
+      const emojis = config?.emojis?.slice(0, 8) ?? mockEmojis;
+      return buildMockGameState(emojis);
+    }),
   };
 });
 
@@ -193,5 +202,66 @@ describe("App", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Play Again" }));
     expect(screen.getByText(/Matches:/).closest("div")).toHaveTextContent("0/8");
+  });
+
+  it("renders emoji set combobox with four options and default selected", () => {
+    render(<App />);
+
+    const combo = screen.getByRole("combobox", { name: /^emoji set$/i });
+    expect(combo).toHaveValue("default");
+    expect(combo).toHaveDisplayValue("Default");
+    const options = within(combo as HTMLElement).getAllByRole("option");
+    expect(options).toHaveLength(4);
+    expect(options.map((o) => (o as HTMLOptionElement).value)).toEqual([
+      "default",
+      "food",
+      "flags",
+      "faces",
+    ]);
+  });
+
+  it("persists emoji set to localStorage when the selection changes", () => {
+    render(<App />);
+
+    fireEvent.change(screen.getByRole("combobox", { name: /^emoji set$/i }), {
+      target: { value: "food" },
+    });
+
+    expect(window.localStorage.getItem(EMOJI_SET_STORAGE_KEY)).toBe("food");
+  });
+
+  it("restores saved emoji set from localStorage on mount", () => {
+    window.localStorage.setItem(EMOJI_SET_STORAGE_KEY, "flags");
+    render(<App />);
+
+    expect(screen.getByRole("combobox", { name: /^emoji set$/i })).toHaveValue("flags");
+  });
+
+  it("plays resetBoard when the emoji set changes", () => {
+    render(<App />);
+    vi.mocked(playSfx).mockClear();
+
+    fireEvent.change(screen.getByRole("combobox", { name: /^emoji set$/i }), {
+      target: { value: "food" },
+    });
+
+    expect(playSfx).toHaveBeenCalledWith("resetBoard");
+  });
+
+  it("passes the current emoji pool to createGame on reset after changing the set", () => {
+    render(<App />);
+
+    fireEvent.change(screen.getByRole("combobox", { name: /^emoji set$/i }), {
+      target: { value: "food" },
+    });
+    vi.mocked(createGame).mockClear();
+
+    fireEvent.click(screen.getByRole("button", { name: "Reset" }));
+
+    expect(createGame).toHaveBeenCalledTimes(1);
+    expect(createGame).toHaveBeenCalledWith({
+      numPairs: 8,
+      emojis: getEmojisForSet("food"),
+    });
   });
 });
