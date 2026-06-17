@@ -23,8 +23,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Chrome for accessibility scans
-        run: npm run a11y:install-chrome
+      - name: Setup Chrome for accessibility scans
+        run: |
+          CHROME="$(command -v google-chrome-stable)"
+          if [ -z "$CHROME" ]; then
+            echo "Error: google-chrome-stable not found on runner"
+            exit 1
+          fi
+          echo "PUPPETEER_EXECUTABLE_PATH=$CHROME" >> "$GITHUB_ENV"
+          echo "Using Chrome at: $CHROME"
 
       - name: Start app and run a11y checks
         run: |
