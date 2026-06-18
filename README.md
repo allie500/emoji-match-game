@@ -19,6 +19,7 @@ This project is a classic matching game:
 - Tailwind CSS
 - ESLint + Prettier
 - Vitest + React Testing Library (unit tests)
+- **Hosting:** AWS S3 behind CloudFront — live site at [https://emojimatchgame.net/](https://emojimatchgame.net/)
 
 ## Prerequisites
 
@@ -185,31 +186,82 @@ Typical deployment flow:
 2. Build app: `npm run build`
 3. Upload/publish the `dist/` directory using your hosting provider's workflow
 
+### This repository
+
+Production deploys for this repo are automated via GitHub Actions (see [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)).
+
+#### Triggers
+
+- Push to `main` (automatic)
+- Manual run via GitHub Actions `workflow_dispatch`
+
+#### Workflow
+
+1. Checkout, Node.js 24, `npm ci`
+2. `npm run build` → output in `dist/`
+3. Configure AWS credentials from repository secrets
+4. `aws s3 sync dist/ s3://<bucket>/ --delete`
+5. `aws cloudfront create-invalidation --distribution-id <id> --paths "/*"`
+
+Deploys are serialized via workflow concurrency (`group: deploy`, `cancel-in-progress: false`) so overlapping `main` pushes do not cancel an in-flight deploy.
+
+The intended release path is feature branch → pull request → merge to `main` → deploy. Direct pushes to `main` are blocked locally by Husky (see Git Hooks).
+
+**Required GitHub secrets** (for maintainers): `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `AWS_S3_BUCKET`, `AWS_CLOUDFRONT_DIST_ID`.
+
 ## Project Structure
 
 ```text
 emoji-match-game/
-├─ public/                  # Static assets served as-is
+├─ .github/
+│  ├─ pull_request_template.md
+│  └─ workflows/            # CI and deploy GitHub Actions workflows
+├─ .husky/                  # Git hooks (pre-commit, pre-push)
+├─ public/
+│  ├─ favicon.svg
+│  └─ icons.svg
+├─ scripts/
+│  └─ run-pa11y-matrix.mjs  # Pa11y matrix runner used by a11y:matrix
 ├─ src/
 │  ├─ assets/
-│  │  └─ audio/             # Sound effect files used by the game
+│  │  ├─ audio/             # Sound effect files used by the game
+│  │  ├─ hero.png           # Hero/header image
+│  │  ├─ react.svg
+│  │  └─ vite.svg
 │  ├─ audio/
 │  │  ├─ sfx.ts             # Centralized sound effect loading/playback utility
 │  │  └─ sfx.test.ts        # Unit tests for audio utility behavior
 │  ├─ components/
 │  │  ├─ Board.tsx          # Game board layout, stats, reset controls
-│  │  └─ EmojiCard.tsx      # Individual card UI + flip state rendering
+│  │  ├─ Board.test.tsx     # Unit tests for Board
+│  │  ├─ EmojiCard.tsx      # Individual card UI + flip state rendering
+│  │  ├─ EmojiCard.test.tsx # Unit tests for EmojiCard
+│  │  ├─ Footer.tsx         # Site footer
+│  │  ├─ Footer.test.tsx    # Unit tests for Footer
+│  │  ├─ InfoModal.tsx      # How-to-play / info modal
+│  │  ├─ InfoModal.test.tsx # Unit tests for InfoModal
+│  │  ├─ WinOverlay.tsx     # Win celebration overlay
+│  │  └─ WinOverlay.test.tsx # Unit tests for WinOverlay
 │  ├─ game/
 │  │  ├─ emojiPool.ts       # Initial emoji set and selection helpers
+│  │  ├─ emojiPool.test.ts  # Unit tests for emoji pool helpers
+│  │  ├─ emojiSetStorage.ts # localStorage persistence for emoji set choice
+│  │  ├─ emojiSetStorage.test.ts # Unit tests for emoji set storage
 │  │  ├─ game.ts            # Core game logic and reducer state transitions
+│  │  ├─ game.test.ts       # Unit tests for game logic
 │  │  └─ types.ts           # Shared game-related TypeScript types
 │  ├─ App.tsx               # App-level state wiring and effects
+│  ├─ App.test.tsx          # Unit tests for App
+│  ├─ App.css               # App-level component styles
 │  ├─ main.tsx              # React app bootstrap
 │  ├─ test/
 │  │  └─ setup.ts           # Vitest + jest-dom setup
+│  ├─ theme.ts              # Light/dark theme preference helper
 │  ├─ vite-env.d.ts         # Vite / Vitest type references
 │  └─ index.css             # Global styles and Tailwind component styles
 ├─ index.html               # Vite HTML entry point
+├─ pa11y.ci.json            # Pa11y CI scenario config
+├─ pa11y.faceup.json        # Pa11y face-up card scenario config
 ├─ tailwind.config.js       # Tailwind content/theme config
 ├─ postcss.config.js        # PostCSS plugin configuration
 ├─ vite.config.ts           # Vite config (plugins/dev server)
