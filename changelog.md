@@ -4,6 +4,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.17] - 2026-06-22
+
+### Changed
+
+- Updated `index.html` to mount the React app on `<main id="root">` instead of a generic `<div>`, adding a document-level main landmark for screen reader navigation (issue #38).
+
 ## [0.0.16] - 2026-05-25
 
 ### Added
