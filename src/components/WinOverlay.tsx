@@ -7,10 +7,11 @@ export const CONFETTI_FADE_MS = 1200;
 
 interface WinOverlayProps {
   emoji: string;
+  moves: number;
   onPlayAgain: () => void;
 }
 
-export default function WinOverlay({ emoji, onPlayAgain }: WinOverlayProps) {
+export default function WinOverlay({ emoji, moves, onPlayAgain }: WinOverlayProps) {
   const [showContent, setShowContent] = useState(false);
   const [fadeConfetti, setFadeConfetti] = useState(false);
 
@@ -81,7 +82,7 @@ export default function WinOverlay({ emoji, onPlayAgain }: WinOverlayProps) {
           ) : null}
         </div>
 
-        <div className="flex min-h-0 items-center justify-center">
+        <div className="flex min-h-0 flex-col items-center justify-center gap-2">
           <div
             data-testid="winning-emoji"
             className="win-emoji-zoom text-7xl leading-none sm:text-8xl"
@@ -89,6 +90,15 @@ export default function WinOverlay({ emoji, onPlayAgain }: WinOverlayProps) {
           >
             {emoji}
           </div>
+          <p
+            className={[
+              "text-center text-lg leading-7 text-slate-300 transition-opacity duration-200 sm:text-xl",
+              showContent ? "visible opacity-100" : "invisible opacity-0",
+            ].join(" ")}
+            aria-hidden={!showContent}
+          >
+            Completed in {moves} moves.
+          </p>
         </div>
 
         <div className="flex min-h-[3.5rem] items-start justify-center">

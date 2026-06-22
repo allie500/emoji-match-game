@@ -78,7 +78,7 @@ export default function Board({
         </button>
       </div>
       {isComplete && winningEmoji ? (
-        <WinOverlay emoji={winningEmoji} onPlayAgain={onReset} />
+        <WinOverlay emoji={winningEmoji} moves={moves} onPlayAgain={onReset} />
       ) : null}
     </div>
   );

@@ -78,6 +78,7 @@ describe("Board", () => {
       vi.advanceTimersByTime(WIN_ZOOM_MS);
     });
     expect(screen.getByText("YOU WON")).toBeInTheDocument();
+    expect(screen.getByText("Completed in 2 moves.")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Play Again" }));
     expect(onReset).toHaveBeenCalledTimes(1);
