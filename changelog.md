@@ -4,6 +4,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.18] - 2026-06-22
+
+### Added
+
+- Win overlay now shows total moves to complete the game (`Completed in x moves.`) after the winning emoji zoom animation (issue #41).
+
 ## [0.0.17] - 2026-06-22
 
 ### Changed
