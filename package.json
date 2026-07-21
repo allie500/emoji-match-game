@@ -1,7 +1,7 @@
 {
   "name": "emoji-match-game",
   "private": true,
-  "version": "0.0.16",
+  "version": "0.0.19",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -40,7 +40,7 @@
     "@vitest/coverage-v8": "^4.1.4",
     "autoprefixer": "^10.5.0",
     "eslint": "^10.7.0",
-    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "husky": "^9.1.7",

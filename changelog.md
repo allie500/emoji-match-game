@@ -4,6 +4,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.19] - 2026-07-21
+
+### Changed
+
+- Bumped `eslint` from `^9.39.4` to `^10.7.0` and transitive `brace-expansion` from `5.0.5` to `5.0.7` to address vulnerable dependencies.
+- Bumped `eslint-plugin-react-hooks` from `^7.0.1` to `^7.1.1` for ESLint 10 peer compatibility so dependency installation resolves cleanly.
+
 ## [0.0.18] - 2026-06-22
 
 ### Added
