@@ -4,6 +4,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.21] - 2026-07-28
+
+### Changed
+
+- Bumped transitive dependency `js-yaml` from `4.2.0` to `4.3.0` (via pa11y → puppeteer → cosmiconfig) to address GHSA-52cp-r559-cp3m. Issue #47.
+
 ## [0.0.20] - 2026-07-24
 
 ### Changed
