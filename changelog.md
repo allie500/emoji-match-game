@@ -4,6 +4,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.22] - 2026-07-28
+
+### Changed
+
+- Bumped GitHub Actions `actions/checkout` from `v7` to `v4` and `actions/setup-node` from `v7` to `v4` to address security vulnerabilities. PR #48.
+- Bumped `postcss` from `8.5.15` to `8.5.24` to address security vulnerabilities. PR #49.
+
 ## [0.0.21] - 2026-07-28
 
 ### Changed
